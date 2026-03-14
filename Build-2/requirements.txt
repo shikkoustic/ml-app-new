@@ -1,6 +1,0 @@
-Flask==3.1.0
-mysql-connector-python==9.5.0
-python-dotenv==1.2.1
-sendgrid==6.12.5
-openai==2.21.0
-Werkzeug==3.1.3
