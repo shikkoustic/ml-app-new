@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CO - Air Quality Dashboard</title>
+  <link rel="stylesheet" href="../static/css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Outfit', sans-serif; background: linear-gradient(to right top, #443247, #333d56, #1f4859, #205050, #375543) !important; background-attachment: fixed !important; }
+    .content-area { background: transparent !important; border: none !important; padding: 40px 0 !important; }
+    .info-section { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 36px; transition: color 0.2s; }
+    .back-link:hover { color: rgba(255,255,255,0.85); transform: none; }
+    .pollutant-header { backdrop-filter: blur(12px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 56px 44px; margin-bottom: 72px; text-align: center; }
+    .pollutant-title { font-family: 'Cormorant Garamond', serif; font-size: 6rem; font-weight: 700; color: #fff; letter-spacing: -2px; line-height: 1; margin-bottom: 14px; }
+    .pollutant-subtitle { font-size: 0.85rem; color: rgba(255,255,255,0.45); font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; }
+    .section-heading { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 600; color: #fff; margin-bottom: 28px; line-height: 1.1; display: flex; align-items: center; gap: 16px; }
+    .section-heading .emoji { font-size: 1.8rem; }
+    .what-block { margin-bottom: 80px; }
+    .what-block p { font-size: 1.05rem; line-height: 1.9; color: rgba(255,255,255,0.65); margin-bottom: 14px; max-width: 820px; font-weight: 300; }
+    .what-block strong { color: rgba(255,255,255,0.9); font-weight: 500; }
+    .sources-section { position: relative; overflow: hidden; min-height: 500px; margin-bottom: 88px; }
+    .sources-img-bg { position: absolute; inset: 0; background-image: url('https://etimg.etb2bimg.com/photo/88391325.cms'); background-size: cover; background-position: center 40%; filter: blur(3px) brightness(0.32) saturate(0.7); transform: scale(1.07); }
+    .sources-img-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,18,26,0.45) 0%, rgba(10,18,26,0.15) 40%, rgba(10,18,26,0.55) 100%); }
+    .sources-content { position: relative; z-index: 2; padding: 64px 32px 72px; max-width: 1100px; margin: 0 auto; }
+    .sources-content .section-heading { margin-bottom: 40px; }
+    .source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .source-card { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); backdrop-filter: blur(8px); border-radius: 14px; padding: 24px 22px 26px; transition: background 0.25s, transform 0.25s; }
+    .source-card:hover { background: rgba(255,255,255,0.13); transform: translateY(-5px); }
+    .source-card-title { font-size: 0.9rem; font-weight: 600; color: #fff; margin-bottom: 8px; letter-spacing: 0.02em; }
+    .source-card-desc { font-size: 0.845rem; color: rgba(255,255,255,0.58); line-height: 1.7; font-weight: 300; }
+    .dual-section-wrapper { position: relative; margin-bottom: 88px; }
+    .col-divider { position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.1) 70%, transparent); }
+    .dual-section { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; align-items: start; }
+    .right-col { margin-top: 88px; }
+    .effect-group { margin-bottom: 36px; }
+    .effect-group-title { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.35); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .effect-list { list-style: none; padding: 0; }
+    .effect-list li { font-size: 0.95rem; color: rgba(255,255,255,0.68); line-height: 1.65; font-weight: 300; padding: 10px 0 10px 20px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .effect-list li:last-child { border-bottom: none; }
+    .effect-list li::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.3); }
+    .styled-list { list-style: none; padding: 0; }
+    .styled-list li { font-size: 0.95rem; color: rgba(255,255,255,0.68); line-height: 1.65; font-weight: 300; padding: 10px 0 10px 20px; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .styled-list li:last-child { border-bottom: none; }
+    .styled-list li::before { content: '→'; position: absolute; left: 0; top: 11px; font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+    .styled-list li strong { color: rgba(255,255,255,0.88); font-weight: 500; }
+    .extra-block { margin-bottom: 80px; }
+    .who-block { margin-bottom: 80px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .who-heading { font-family: 'Cormorant Garamond', serif; font-size: 3.8rem; font-weight: 700; color: #fff; line-height: 1.05; margin-bottom: 44px; letter-spacing: -0.5px; }
+    .who-stats { display: flex; gap: 72px; margin-bottom: 32px; }
+    .who-stat-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.16em; color: rgba(255,255,255,0.35); font-weight: 500; margin-bottom: 8px; }
+    .who-stat-value { font-family: 'Cormorant Garamond', serif; font-size: 3.8rem; font-weight: 700; color: #fff; line-height: 1; }
+    .who-stat-unit { font-size: 0.85rem; color: rgba(255,255,255,0.38); font-weight: 300; margin-top: 6px; letter-spacing: 0.04em; }
+    .who-note { display: inline-block; padding: 13px 20px; background: rgba(234,179,8,0.08); border-left: 2px solid rgba(234,179,8,0.5); border-radius: 0 6px 6px 0; color: rgba(251,191,36,0.75); font-size: 0.875rem; font-weight: 400; max-width: 560px; line-height: 1.65; }
+    @media (max-width: 820px) { .source-grid { grid-template-columns: 1fr 1fr; } .dual-section { grid-template-columns: 1fr; gap: 48px; } .right-col { margin-top: 0; } .col-divider { display: none; } .pollutant-title { font-size: 4rem; } .section-heading { font-size: 2.2rem; } .who-heading { font-size: 2.8rem; } .who-stats { gap: 40px; } .who-stat-value { font-size: 3rem; } }
+    @media (max-width: 540px) { .source-grid { grid-template-columns: 1fr; } .sources-content { padding: 48px 20px 56px; } .info-section { padding: 0 20px; } .pollutant-title { font-size: 3rem; } .who-heading { font-size: 2.2rem; } }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo"><img src="../static/images/logo.png" alt="Logo" class="logo-home"></div>
+      <div class="nav-links">
+        <span class="user-email">{{ user_email }}</span>
+        <a href="/logout" class="logout-btn">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <div class="content-area">
+
+      <div class="info-section">
+        <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+
+        <div class="pollutant-header co">
+          <h1 class="pollutant-title">CO</h1>
+          <p class="pollutant-subtitle">Carbon Monoxide</p>
+        </div>
+
+        <div class="what-block">
+          <h2 class="section-heading"><span class="emoji">🔍</span> What is CO?</h2>
+          <p>Carbon Monoxide (CO) is a colorless, odorless, and tasteless gas that is highly toxic to humans and animals. It's often called the <strong>"silent killer"</strong> because you can't see, smell, or taste it.</p>
+          <p>CO prevents oxygen from being transported in the blood, which can be <strong>fatal at high concentrations</strong>.</p>
+        </div>
+      </div>
+
+      <!-- Sources — full-bleed image -->
+      <div class="sources-section">
+        <div class="sources-img-bg"></div>
+        <div class="sources-content">
+          <h2 class="section-heading"><span class="emoji">📍</span> Sources of CO</h2>
+          <div class="source-grid">
+            <div class="source-card">
+              <div class="source-card-title">Vehicle Exhaust</div>
+              <div class="source-card-desc">Cars, motorcycles, and trucks are the main outdoor source of carbon monoxide.</div>
+            </div>
+            <div class="source-card">
+              <div class="source-card-title">Incomplete Combustion</div>
+              <div class="source-card-desc">Gas stoves, furnaces, and water heaters that burn fuel incompletely.</div>
+            </div>
+            <div class="source-card">
+              <div class="source-card-title">Tobacco Smoke</div>
+              <div class="source-card-desc">Cigarettes and other smoking products produce concentrated CO.</div>
+            </div>
+            <div class="source-card">
+              <div class="source-card-title">Generators</div>
+              <div class="source-card-desc">Portable generators used in poorly ventilated areas are a serious risk.</div>
+            </div>
+            <div class="source-card">
+              <div class="source-card-title">Industrial Processes</div>
+              <div class="source-card-desc">Steel production and chemical manufacturing release CO as a byproduct.</div>
+            </div>
+            <div class="source-card">
+              <div class="source-card-title">Wood Burning</div>
+              <div class="source-card-desc">Fireplaces, wood stoves, and charcoal grills produce significant CO.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-section">
+
+        <!-- Health + Warning Signs (diagonal) -->
+        <div class="dual-section-wrapper">
+          <div class="col-divider"></div>
+          <div class="dual-section">
+            <div class="left-col">
+              <h2 class="section-heading"><span class="emoji">⚠️</span> Health Effects</h2>
+              <div class="effect-group">
+                <div class="effect-group-title">Low-Level Exposure</div>
+                <ul class="effect-list">
+                  <li>Headaches</li>
+                  <li>Dizziness</li>
+                  <li>Fatigue and weakness</li>
+                  <li>Nausea and vomiting</li>
+                </ul>
+              </div>
+              <div class="effect-group">
+                <div class="effect-group-title">High-Level Exposure</div>
+                <ul class="effect-list">
+                  <li>Confusion and disorientation</li>
+                  <li>Loss of consciousness</li>
+                  <li>Brain damage</li>
+                  <li>Death</li>
+                </ul>
+              </div>
+            </div>
+            <div class="right-col">
+              <h2 class="section-heading"><span class="emoji">🚨</span> Warning Signs of Poisoning</h2>
+              <ul class="styled-list">
+                <li><strong>Flu-like Symptoms</strong> — Without fever</li>
+                <li><strong>Multiple People Ill</strong> — Several people feeling sick simultaneously</li>
+                <li><strong>Symptoms Improve</strong> — When away from the source location</li>
+                <li><strong>Pets Acting Strange</strong> — Animals are more sensitive to CO</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Protection -->
+        <div class="extra-block">
+          <h2 class="section-heading"><span class="emoji">🛡️</span> Protection Measures</h2>
+          <ul class="styled-list">
+            <li><strong>Install CO Detectors</strong> — On every floor of your home</li>
+            <li><strong>Proper Ventilation</strong> — Ensure adequate airflow in enclosed spaces</li>
+            <li><strong>Regular Maintenance</strong> — Service heating systems and chimneys annually</li>
+            <li><strong>Never Use Indoors</strong> — Generators, grills, or camp stoves need outdoor use</li>
+            <li><strong>Car Safety</strong> — Never run car engine in a closed garage</li>
+            <li><strong>Check Appliances</strong> — Look for yellow or flickering flames (should be blue)</li>
+          </ul>
+        </div>
+
+        <!-- Safety Guidelines -->
+        <div class="who-block">
+          <h2 class="who-heading">📊 Safety Guidelines</h2>
+          <div class="who-stats">
+            <div class="who-stat">
+              <div class="who-stat-label">8-hour mean (WHO)</div>
+              <div class="who-stat-value">10</div>
+              <div class="who-stat-unit">mg/m³</div>
+            </div>
+            <div class="who-stat">
+              <div class="who-stat-label">1-hour mean</div>
+              <div class="who-stat-value">35</div>
+              <div class="who-stat-unit">mg/m³</div>
+            </div>
+          </div>
+          <p class="who-note">CO levels above 70 ppm can cause immediate health effects. Levels above 150 ppm can be fatal.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

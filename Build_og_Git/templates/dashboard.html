@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="static/css/dashboard.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">
+        <img src="static/images/logo.png" alt="Polluted Air" class="logo-home">
+      </div>
+      <div class="nav-links">
+        <a href="/aqi" class="nav-btn aqi-btn">AQI</a>
+        <a href="/airchat" class="nav-btn airchat-btn">AirChat</a>
+        <a href="/about" class="nav-btn airchat-btn">About Us</a>
+        <a href="/logout" class="logout-btn">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="dashboard-container">
+    <div class="content-area">
+      <div class="info-section">
+        <div class="breathing-header">
+          <img src="static/images/breathing-graphic.png" alt="What Are You Breathing?" class="header-image">
+        </div>
+
+        <div class="pollutants-section">
+          <h2 class="pollutants-title">
+            <span class="title-icon">💨</span>
+            <span class="title-text">Air Pollutants & Their Impact</span>
+          </h2>
+          <div class="pollutants-grid">
+            <a href="/pollutants/pm25" class="pollutant-card pm25">
+              <div class="pollutant-icon">PM2.5</div>
+              <h3>Particulate Matter</h3>
+              <p class="size">< 2.5 µm</p>
+              <p class="impact">Enters lungs, causes breathing issues</p>
+            </a>
+
+            <a href="/pollutants/pm10" class="pollutant-card pm10">
+              <div class="pollutant-icon">PM10</div>
+              <h3>Particulate Matter</h3>
+              <p class="size">< 10 µm</p>
+              <p class="impact">Causes irritation and asthma</p>
+            </a>
+
+            <a href="/pollutants/no2" class="pollutant-card no2">
+              <div class="pollutant-icon">NO₂</div>
+              <h3>Nitrogen Dioxide</h3>
+              <p class="size"></p>
+              <p class="impact">Affects lungs, causes inflammation</p>
+            </a>
+
+            <a href="/pollutants/so2" class="pollutant-card so2">
+              <div class="pollutant-icon">SO₂</div>
+              <h3>Sulfur Dioxide</h3>
+              <p class="size"></p>
+              <p class="impact">Causes respiratory problems</p>
+            </a>
+
+            <a href="/pollutants/co" class="pollutant-card co">
+              <div class="pollutant-icon">CO</div>
+              <h3>Carbon Monoxide</h3>
+              <p class="size"></p>
+              <p class="impact">Reduces oxygen supply in blood</p>
+            </a>
+
+            <a href="/pollutants/o3" class="pollutant-card o3">
+              <div class="pollutant-icon">O₃</div>
+              <h3>Ozone</h3>
+              <p class="size">ground-level</p>
+              <p class="impact">Causes chest pain & coughing</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="calculation-card">
+          <h2 class="calculation-title">
+            <span class="title-icon">🧮</span>
+            <span class="title-text">How is AQI Calculated?</span>
+          </h2>
+          <div class="calculation-content">
+            <div class="step-card">
+              <div class="step-number">1</div>
+              <div class="step-text">
+                <h4>Measure Pollutants</h4>
+                <p>Concentration of each Pollutant is measured</p>
+              </div>
+            </div>
+
+            <div class="step-arrow">↓</div>
+
+            <div class="step-card">
+              <div class="step-number">2</div>
+              <div class="step-text">
+                <h4>Convert to Sub-Index</h4>
+                <p>Each pollutant concentration is converted into a <strong>sub-index</strong> value</p>
+              </div>
+            </div>
+
+            <div class="step-arrow">↓</div>
+
+            <div class="step-card">
+              <div class="step-number">3</div>
+              <div class="step-text">
+                <h4>Find Maximum Value</h4>
+                <p>The <strong>highest sub-index</strong> becomes the final AQI</p>
+              </div>
+            </div>
+
+            <div class="formula-highlight">
+              <div class="formula-icon">📊</div>
+              <div class="formula-text">
+                <p class="formula-label">Formula:</p>
+                <p class="formula">AQI = Maximum (Sub-index of PM2.5, PM10, NO₂, SO₂, CO, O₃)</p>
+              </div>
+            </div>
+
+            <div class="example-box">
+              <h4>💡 Quick Example</h4>
+              <p>If PM2.5 sub-index = 236, PM10 = 182, NO₂ = 78</p>
+              <p class="result-text">Final AQI = <span class="highlight-number">236</span> (Poor)</p>
+              <p class="note">We consider the highest sub-index pollutant value as the AQI</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="aqi-section">
+          <h2 class="aqi-title">
+            <span class="title-gradient">🎨 AQI Categories</span>
+            <span class="title-subtitle">(India Standard)</span>
+          </h2>
+          <div class="aqi-categories">
+            <div class="category-item good">
+              <div class="category-icon">😊</div>
+              <div class="category-range">0-50</div>
+              <div class="category-name">Good</div>
+              <div class="category-impact">Minimal impact</div>
+            </div>
+            <div class="category-item satisfactory">
+              <div class="category-icon">🙂</div>
+              <div class="category-range">51-100</div>
+              <div class="category-name">Satisfactory</div>
+              <div class="category-impact">Minor discomfort</div>
+            </div>
+            <div class="category-item moderate">
+              <div class="category-icon">😐</div>
+              <div class="category-range">101-200</div>
+              <div class="category-name">Moderate</div>
+              <div class="category-impact">Breathing discomfort</div>
+            </div>
+            <div class="category-item poor">
+              <div class="category-icon">😷</div>
+              <div class="category-range">201-300</div>
+              <div class="category-name">Poor</div>
+              <div class="category-impact">Health effects</div>
+            </div>
+            <div class="category-item verypoor">
+              <div class="category-icon">😨</div>
+              <div class="category-range">301-400</div>
+              <div class="category-name">Very Poor</div>
+              <div class="category-impact">Serious health effects</div>
+            </div>
+            <div class="category-item severe">
+              <div class="category-icon">☠️</div>
+              <div class="category-range">401-500</div>
+              <div class="category-name">Severe</div>
+              <div class="category-impact">Emergency conditions</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

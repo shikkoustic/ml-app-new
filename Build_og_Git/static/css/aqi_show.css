@@ -1,0 +1,242 @@
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-image: linear-gradient(134.6deg, rgba(201,37,107,1) 15.4%, rgba(116,16,124,1) 74.7%);
+  background-attachment: fixed;
+  color: #f0e6ff;
+  min-height: 100vh;
+}
+
+/* NAVBAR */
+
+.navbar {
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo { 
+  display: flex; 
+  align-items: center; 
+}
+
+.logo-home { 
+  width: 50px; 
+  height: auto; 
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-btn {
+  padding: 8px 20px;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+
+.nav-btn:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+}
+
+.logout-btn {
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.35);
+}
+
+.logout-btn:hover {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.45);
+  transform: translateY(-1px);
+}
+
+/* MAIN CONTAINER */
+
+.aqi-container{
+  width:100%;
+  height:80vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:white;
+}
+
+/* TITLE */
+
+.title{
+  font-size:40px;
+  font-weight:700;
+  margin-bottom:10px;
+}
+
+/* CARD */
+
+.aqi-card{
+  display:flex;
+  align-items:center;
+  gap:40px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  padding:40px 60px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  transition:transform 0.3s ease;
+}
+
+.aqi-card:hover{
+  transform:translateY(-5px);
+}
+
+/* AQI CIRCLE */
+
+.aqi-circle{
+  width:160px;
+  height:160px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+}
+
+.aqi-number{
+  font-size:42px;
+  font-weight:700;
+  color:rgb(15, 11, 11);
+}
+
+/* AQI INFO */
+
+.aqi-info{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.category{
+  font-size:32px;
+  font-weight:600;
+}
+
+.range{
+  font-size:18px;
+  opacity:0.9;
+}
+
+.warning{
+  font-size:16px;
+  color:#ffd966;
+  margin-top:10px;
+}
+
+/* AQI SCALE */
+
+.aqi-scale-wrapper{
+  width:70%;
+  margin-top:50px;
+}
+
+/* SCALE BAR */
+
+.aqi-scale{
+  position:relative;
+  display:flex;
+  height:20px;
+  border-radius:10px;
+  overflow:visible;   /* IMPORTANT FIX */
+}
+
+/* SEGMENTS */
+
+.scale{
+  flex:1;
+}
+
+.good{ background:#00e400; }
+.satisfactory{ background:#9cff00; }
+.moderate{ background:#ffff00; }
+.poor{ background:#ff7e00; }
+.verypoor{ background:#ff0000; }
+.severe{ background:#7e0023; }
+
+/* POINTER */
+
+.aqi-pointer{
+
+position:absolute;
+bottom:-14px;
+
+width:0;
+height:0;
+
+border-left:8px solid transparent;
+border-top: 5px;
+border-right:8px solid transparent;
+border-bottom:12px solid white;   /* triangle pointing UP */
+
+transform:translateX(-50%);
+transition:left 1s ease-out;
+
+}
+
+/* SCALE LABELS */
+
+.aqi-labels{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  margin-top:6px;
+  color:white;
+}
+
+/* MOBILE */
+
+@media (max-width:768px){
+
+  .aqi-card{
+    flex-direction:column;
+    text-align:center;
+  }
+
+  .aqi-scale-wrapper{
+    width:90%;
+  }
+
+}

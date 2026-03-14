@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AQI Forecast</title>
+
+<link rel="stylesheet" href="/static/css/aqi_show.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-container">
+
+<div class="logo">
+<img src="/static/images/logo.png" alt="Polluted Air" class="logo-home">
+</div>
+
+<div class="nav-links">
+<a href="/dashboard" class="nav-btn dashboard-btn">Dashboard</a>
+<a href="/airchat" class="nav-btn airchat-btn">AirChat</a>
+<a href="/about" class="nav-btn airchat-btn">About Us</a>
+<a href="/logout" class="logout-btn">Logout</a>
+</div>
+
+</div>
+</nav>
+
+
+<div class="aqi-container">
+
+<h1 class="title">Delhi AQI Forecast</h1>
+
+<!-- AQI CARD -->
+<div class="aqi-card">
+
+<!-- AQI CIRCLE -->
+<div class="aqi-circle" style="background-color: {{ color }};">
+
+<span class="aqi-number" style="color: {{ text_color }};">
+{{ aqi }}
+</span>
+
+</div>
+
+<!-- AQI INFORMATION -->
+<div class="aqi-info">
+
+<h2 class="category">{{ category }}</h2>
+
+<p class="range">
+Expected Range: {{ aqi_low }} – {{ aqi_high }}
+</p>
+
+{% if transition_message %}
+<p class="warning">
+⚠ {{ transition_message }}
+</p>
+{% endif %}
+
+</div>
+</div>
+
+
+<!-- AQI SCALE -->
+<div class="aqi-scale-wrapper">
+
+<div class="aqi-scale">
+
+<div class="scale good"></div>
+<div class="scale satisfactory"></div>
+<div class="scale moderate"></div>
+<div class="scale poor"></div>
+<div class="scale verypoor"></div>
+<div class="scale severe"></div>
+
+<!-- POINTER -->
+<div class="aqi-pointer" id="aqiPointer"
+style="left: {{ (aqi/500)*100 }}%">
+</div>
+
+</div>
+
+<div class="aqi-labels">
+<span>0</span>
+<span>50</span>
+<span>100</span>
+<span>200</span>
+<span>300</span>
+<span>400</span>
+<span>500</span>
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* AQI NUMBER COUNTER ANIMATION */
+
+let target = {{ aqi }};
+let current = 0;
+
+let counter = document.querySelector(".aqi-number");
+
+let interval = setInterval(() => {
+
+current += Math.ceil(target / 40);
+
+if(current >= target){
+current = target;
+clearInterval(interval);
+}
+
+counter.innerText = current;
+
+},20);
+
+
+/* POINTER ANIMATION */
+
+window.onload = function(){
+
+let pointer = document.getElementById("aqiPointer");
+
+pointer.style.left = "{{ (aqi/500)*100 }}%";
+
+};
+
+</script>
+
+</body>
+</html>
